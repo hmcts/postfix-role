@@ -1,0 +1,11 @@
+galaxy_info:
+  author: HMCTS Reform programme
+  description: Postfix
+  company: HMCTS
+
+  license: MIT
+
+  galaxy_tags: []
+
+dependencies:
+  - role: devops.repos

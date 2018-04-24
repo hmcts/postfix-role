@@ -1,0 +1,4 @@
+.molecule
+.yamllint
+.pytest_cache
+*.pyc

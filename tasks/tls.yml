@@ -1,0 +1,46 @@
+---
+- name: add TLS configuration to Postfix
+  blockinfile:
+    dest: /etc/postfix/main.cf
+    block: |
+      smtpd_tls_security_level = may
+      smtpd_tls_key_file = {{ postfix_tls_key_location }}
+      smtpd_tls_cert_file = {{ postfix_tls_cert_location }}
+      #smtpd_tls_CAfile = /etc/pki/postfix/cert.pem
+      smtpd_tls_loglevel = 1
+      smtpd_tls_session_cache_timeout = 3600s
+      smtpd_tls_session_cache_database = btree:/var/lib/postfix/smtpd_tls_cache
+      tls_random_source = dev:/dev/urandom
+      tls_random_exchange_name = /var/lib/postfix/prng_exch
+      smtpd_tls_auth_only = yes
+
+- name: Ensure certs dir exists and has correct ownerhsip and permissions
+  file:
+    path: "{{ postfix_tls_certs_dir }}"
+    state: directory
+    owner: root
+    group: root
+    mode: 0755
+
+- name: copy SSL cert
+  become: yes
+  copy:
+    dest: "{{ postfix_tls_cert_location }}"
+    content: "{{ postfix_ssl_crt }}"
+    owner: root
+    group: root
+    mode: 0644
+
+- name: copy SSL key
+  become: yes
+  copy:
+    dest: "{{ postfix_tls_key_location }}"
+    content: "{{ postfix_ssl_key }}"
+    owner: root
+    group: root
+    mode: 0640
+  notify:
+    - "restart postfix"
+
+- name: "Force handlers to run"
+  meta: flush_handlers

@@ -1,0 +1,13 @@
+---
+- name: Ensure libselinux-python is installed
+  yum: name=libselinux-python state=installed
+  when: ansible_os_family == 'RedHat'
+
+- name: Ensure SELinux-policy is installed
+  yum: name=selinux-policy state=installed
+  when: ansible_os_family == 'RedHat'
+
+- name: Ensure SELinux-policy is set to targeted
+  selinux:
+    policy: targeted
+    state: enforcing

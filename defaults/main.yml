@@ -1,0 +1,13 @@
+---
+# General Configuration
+postfix_main_destinations: "all"
+postfix_main_interfaces: "all"
+postfix_main_protocols: "ipv4"
+postfix_main_networks: "172.0.0.0/8, 10.0.0.0/12, 10.16.0.0/12, 10.32.0.0/12"
+
+# TLS configuration f
+postfix_tls_certs_dir: "/etc/pki/postfix/"
+postfix_tls_key_location: "/etc/pki/postfix/tls.key"
+postfix_tls_cert_location: "/etc/pki/postfix/tls.crt"
+postfix_ssl_key: ssl_key
+postfix_ssl_crt: ssl_crt

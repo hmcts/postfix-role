@@ -1,0 +1,33 @@
+---
+- name: Postfix customisation 1.
+  lineinfile:
+    dest: /etc/postfix/main.cf
+    regexp: '^mydestination ='
+    line: 'mydestination = {{ postfix_main_destinations }}'
+    backup: no
+
+- name: Postfix customisation 2.
+  lineinfile:
+    dest: /etc/postfix/main.cf
+    regexp: '^inet_protocols ='
+    line: 'inet_protocols = {{ postfix_main_protocols }}'
+    backup: no
+
+- name: Postfix customisation 3.
+  lineinfile:
+    dest: /etc/postfix/main.cf
+    regexp: '^inet_interfaces ='
+    line: 'inet_interfaces = {{ postfix_main_interfaces }}'
+    backup: no
+
+- name: Postfix customisation 4.
+  lineinfile:
+    dest: /etc/postfix/main.cf
+    regexp: '^mynetworks ='
+    line: 'mynetworks = {{ postfix_main_networks }}'
+    backup: no
+
+- name: Ensure postfix is started
+  service:
+    name: postfix
+    state: started

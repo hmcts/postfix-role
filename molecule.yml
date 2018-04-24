@@ -1,0 +1,28 @@
+---
+dependency:
+  name: galaxy
+  requirements_file: requirements.yml
+
+driver:
+  name: docker
+
+docker:
+  containers:
+    - name: postfix-role
+      image: centos/systemd
+      image_version: latest
+      build_image: true
+      privileged: true
+      cap_add:
+        - SYS_ADMIN
+      environment:
+        http_proxy: "http://reformmgmtproxyout.reform.hmcts.net:8080/"
+        https_proxy: "http://reformmgmtproxyout.reform.hmcts.net:8080/"
+        no_proxy: "localhost,127.0.0.0/8,127.0.0.1,127.0.0.1*,local.home,reform.hmcts.net,*.reform.hmcts.net"
+
+
+verifier:
+  name: testinfra
+
+ansible:
+  playbook: tests/playbook.yml
