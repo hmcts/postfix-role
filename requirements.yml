@@ -6,6 +6,6 @@
   version: master
 
 - name: devops.common
-  src: git@git.reform.hmcts.net:devops/common-role.git
+  src: https://github.com/hmcts/common-role.git
   scm: git
   version: master
